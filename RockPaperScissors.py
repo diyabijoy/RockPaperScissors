@@ -1,43 +1,45 @@
 import random
-game_list = ("R","P","S")
-gen_score = 0
+
+choices = {
+    "R": "rock",
+    "P": "paper",
+    "S": "scissors"
+}
+
+# The key beats the value
+beats = {
+    "R": "S",
+    "P": "R",
+    "S": "P"
+}
+
+computer_score = 0
 user_score = 0
 
-print("ROCK - PAPER - SCISSORS\n")
+while computer_score < 5 and user_score < 5:
+    user_choice = input("Choose R (rock), P (paper), or S (scissors): ").upper()
 
-while(gen_score<5 and user_score<5):
-     gen_choice = random.choice(game_list)
-     user_choice = input(f"Score:{user_score}-{gen_score}. Choose (R/P/S):").upper()
+    if user_choice not in choices:
+        print("Invalid choice. Try again.")
+        continue
 
-     if (gen_choice == "R" and user_choice == "R"):
-        print("R--Play again!")
-     elif (gen_choice == "P" and user_choice == "R"):
-          print("P--You lose!")
-          gen_score += 1
-     elif (gen_choice == "S" and user_choice == "R"):
-          print("S--You win!")
-          user_score += 1
+    computer_choice = random.choice(list(choices))
 
-     elif (gen_choice == "R" and user_choice == "P"):
-        print("R--You win!")
+    print(f"You chose {choices[user_choice]}.")
+    print(f"Computer chose {choices[computer_choice]}.")
+
+    if user_choice == computer_choice:
+        print("Draw!")
+    elif beats[user_choice] == computer_choice:
+        print("You win!")
         user_score += 1
-     elif (gen_choice == "P" and user_choice == "P"):
-          print("P--Play again!")
-     elif (gen_choice == "S" and user_choice == "P"):
-          print("S--You lose!")
-          gen_score += 1
+    else:
+        print("Computer wins!")
+        computer_score += 1
 
-     elif (gen_choice == "R" and user_choice == "S"):
-        print("R--You lose!")
-        gen_score += 1
-     elif (gen_choice == "P" and user_choice == "S"):
-          print("P--You win!")
-          user_score += 1
-     elif (gen_choice == "S" and user_choice == "S"):
-          print("S--Play again!")
-     else:
-          print("Invalid choice")
-if(user_score >= 5):
-  print("Congrats!You WON the game!")
+    print(f"Score: You {user_score} - Computer {computer_score}\n")
+
+if user_score == 5:
+    print("You won the game!")
 else:
-  print("You LOST...")
+    print("Computer won the game!")
